@@ -1,0 +1,12 @@
+###
+post http://localhost:3003/login
+Content-Type: application/json
+
+{
+    "email": "visitante@email.com",
+    "password": "123456"
+}
+
+###
+POST http://localhost:3003/order
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMzODAwNjczfQ.bKgPcC8tk7gWjXwTws93L1p42pABnBLZ2XQDQwk7fUU
