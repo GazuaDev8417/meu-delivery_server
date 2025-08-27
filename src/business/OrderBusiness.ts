@@ -60,21 +60,21 @@ export default class OrderBusiness{
         return order
    }
 
-    ordersByRestaurant = async(req:Request):Promise<OrderModel[]>=>{
+    /* ordersByRestaurant = async(req:Request):Promise<OrderModel[]>=>{
         const restaurant = await new Services().authToken_restaurant(req)
 
         const orders = await this.orderData.ordersByRestaurant(restaurant.id)
        
         return orders
-   }
+   } */
 
-    restaurantOrdersByClient = async(req:Request):Promise<OrderModel[]>=>{
+    /* restaurantOrdersByClient = async(req:Request):Promise<OrderModel[]>=>{
         const restaurant = await new Services().authToken_restaurant(req)
         
         const orders = await this.orderData.restaurantOrdersByClient(restaurant.id, req.params.id)
     
         return orders
-    }
+    } */
 
 
     deleteOrder = async(req:Request):Promise<void>=>{
@@ -148,19 +148,19 @@ export default class OrderBusiness{
     }
 
 
-    activeRestaurantOrders = async(req:Request):Promise<OrderModel[]>=>{
+    /* activeRestaurantOrders = async(req:Request):Promise<OrderModel[]>=>{
         const restaurant = await new Services().authToken_restaurant(req)
         const orders = await this.orderData.activeRestaurantOrders(restaurant.id)
 
         return orders
-    }
+    } */
 
-    registAddressOrder = async(req:Request):Promise<void>=>{
+    /* registAddressOrder = async(req:Request):Promise<void>=>{
         const { street, cep, number, neighbourhood, city, state, complement, person } = req.body
         const address = `${street} ${number}, ${cep}, ${neighbourhood} - ${city}/${state} - ${complement}, ${person}`
         const token = req.headers.authorization
         const userId = new Services().tokenData(token as string).payload
 
         await this.orderData.registAddressOrder(address, userId)
-    }
+    } */
 }

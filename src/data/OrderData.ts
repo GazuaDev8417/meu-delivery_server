@@ -58,7 +58,7 @@ export default class OrderData extends ConnectToDatabase{
     }
 
 
-    ordersByRestaurant = async(restaurant:string):Promise<OrderModel[]>=>{
+    /* ordersByRestaurant = async(restaurant:string):Promise<OrderModel[]>=>{
         try{
             
             const orders = await ConnectToDatabase.con(this.ORDER_TABLE).where({
@@ -69,10 +69,10 @@ export default class OrderData extends ConnectToDatabase{
         }catch(e:any){
             throw new Error(`Erro ao buscar pedido: ${e}`)
         }
-    }
+    } */
 
 
-    activeRestaurantOrders = async(restaurant:string):Promise<OrderModel[]>=>{
+    /* activeRestaurantOrders = async(restaurant:string):Promise<OrderModel[]>=>{
         try{
             
             const activeOrders = await ConnectToDatabase.con(this.ORDER_TABLE).where({
@@ -84,10 +84,10 @@ export default class OrderData extends ConnectToDatabase{
         }catch(e:any){
             throw new Error(`Erro ao buscar pedido: ${e}`)
         }
-    }
+    } */
 
 
-    restaurantOrdersByClient = async(restaurant:string, client:string):Promise<OrderModel[]>=>{
+    /* restaurantOrdersByClient = async(restaurant:string, client:string):Promise<OrderModel[]>=>{
         try {
 
             const orders = await ConnectToDatabase.con(this.ORDER_TABLE).where({
@@ -100,7 +100,7 @@ export default class OrderData extends ConnectToDatabase{
         } catch (e:any) {
             throw new Error(`Erro ao buscar pedidos: ${e}`)
         }
-    }
+    } */
 
 
     activeOrders = async(client:string):Promise<OrderModel[]>=>{
@@ -267,7 +267,7 @@ export default class OrderData extends ConnectToDatabase{
         }
     }
 
-    registAddressOrder = async(address:string, client:string):Promise<void>=>{
+    /* registAddressOrder = async(address:string, client:string):Promise<void>=>{
         try{
 
             await ConnectToDatabase.con(this.ORDER_TABLE)
@@ -277,6 +277,6 @@ export default class OrderData extends ConnectToDatabase{
         }catch(e:any){
             throw new Error(`Erro ao registrar endereço: ${e}`)
         }
-    }
+    } */
    
 }

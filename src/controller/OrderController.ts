@@ -48,7 +48,7 @@ export default class OrderController{
         }
     }
 
-    ordersByRestaurant = async(req:Request, res:Response):Promise<void>=>{
+    /* ordersByRestaurant = async(req:Request, res:Response):Promise<void>=>{
         try{
 
             const orders = await this.orderBusiness.ordersByRestaurant(req)           
@@ -59,10 +59,10 @@ export default class OrderController{
             let message = e.error === undefined ? e.message : e.error.message
             res.status(statusCode).send(message || e.sqlMessage)
         }
-    }
+    } */
 
 
-    restaurantOrdersByClient = async(req:Request, res:Response):Promise<void>=>{
+    /* restaurantOrdersByClient = async(req:Request, res:Response):Promise<void>=>{
         try{
 
             const orders = await this.orderBusiness.restaurantOrdersByClient(req)           
@@ -73,7 +73,7 @@ export default class OrderController{
             let message = e.error === undefined ? e.message : e.error.message
             res.status(statusCode).send(message || e.sqlMessage)
         }
-    }
+    } */
 
 
     deleteOrder = async(req:Request, res:Response):Promise<void>=>{
@@ -198,7 +198,7 @@ export default class OrderController{
     }
 
 
-    activeRestaurantOrders = async(req:Request, res:Response):Promise<void>=>{
+    /* activeRestaurantOrders = async(req:Request, res:Response):Promise<void>=>{
         try{
             
             const orders = await this.orderBusiness.activeRestaurantOrders(req)
@@ -209,10 +209,10 @@ export default class OrderController{
             let message = e.error === undefined ? e.message : e.error.message
             res.status(statusCode).send(message || e.sqlMessage)
         }
-    }
+    } */
 
 
-    registAddressOrder = async(req:Request, res:Response):Promise<void>=>{
+    /* registAddressOrder = async(req:Request, res:Response):Promise<void>=>{
         try{
 
             await this.orderBusiness.registAddressOrder(req)
@@ -223,5 +223,5 @@ export default class OrderController{
             let message = e.error === undefined ? e.message : e.error.message
             res.status(statusCode).send(message || e.sqlMessage)
         }
-    }
+    } */
 }

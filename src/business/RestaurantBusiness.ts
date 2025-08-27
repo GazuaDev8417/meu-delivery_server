@@ -121,7 +121,7 @@ export default class RestaurantBusiness{
     }
 
 
-    restaurantById = async(req:Request):Promise<RestaurantModel>=>{
+    /* restaurantById = async(req:Request):Promise<RestaurantModel>=>{
         const restaurant = await this.restaurantData.restaurantById(req.params.id)
         if(!restaurant){
             throw{
@@ -131,14 +131,14 @@ export default class RestaurantBusiness{
         }
 
         return restaurant
-    }
+    } */
 
 
-    restaurantByToken = async(req:Request):Promise<RestaurantModel>=>{
+    /* restaurantByToken = async(req:Request):Promise<RestaurantModel>=>{
         const restaurant = await new Services().authToken_restaurant(req)
 
         return restaurant
-    }
+    } */
 
 //PRODUCTS 
     insertProduct = async(req:Request):Promise<void>=>{
