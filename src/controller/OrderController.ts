@@ -1,5 +1,10 @@
 import { Request, Response } from "express"
 import OrderBusiness from "../business/OrderBusiness"
+import axios from "axios"
+import { config } from "dotenv"
+
+config()
+
 
 
 export default class OrderController{
@@ -224,4 +229,22 @@ export default class OrderController{
             res.status(statusCode).send(message || e.sqlMessage)
         }
     } */
+
+    
+    orderPyament = async(req:Request, res:Response):Promise<void>=>{
+        const ACCESS_TOKEN = process.env.ACCESS_TOKEN
+        const { items } = req.body
+        try{
+            const response = await axios.post(
+                'https://api.mercadopago.com/checkout/preferences',
+                { items },
+                { headers: { Authorization: `Bearer ${ACCESS_TOKEN}` }}
+            )
+            res.json({ init_point: response.data.init_point })
+        }catch(e:any){
+            let statusCode = e.statusCode || 400
+            let message = e.error === undefined ? e.message : e.error.message
+            res.status(statusCode).send(message || e.sqlMessage)
+        }
+    }
 }

@@ -53,6 +53,7 @@ app.get('/restaurant', restaurantController.getRestaurants)
 app.delete('/product/:id', restaurantController.deleteProduct)
 //ORDERS
 app.post('/order', orderController.todo_orders)
+app.post('/payment_preferences', orderController.orderPyament)
 
 //app.get('/orders', orderController.ordersByClient)
 app.get('/order/:id', orderController.orderById)

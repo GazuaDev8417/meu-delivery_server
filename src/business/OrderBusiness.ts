@@ -8,6 +8,7 @@ import { OrderModel } from "../model/typesAndInterfaces"
 
 
 
+
 export default class OrderBusiness{
     constructor(
         private orderData:OrderData
@@ -163,4 +164,6 @@ export default class OrderBusiness{
 
         await this.orderData.registAddressOrder(address, userId)
     } */
+
+    
 }
