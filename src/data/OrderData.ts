@@ -33,19 +33,6 @@ export default class OrderData extends ConnectToDatabase{
     }
 
 
-    /* ordersByClient = async(client:string):Promise<OrderModel[]>=>{
-        try{
-            
-            const orders = await ConnectToDatabase.con(this.ORDER_TABLE).where({
-                client
-            }).orderBy('product', 'asc')
-            
-            return orders
-        }catch(e:any){
-            throw new Error(`Erro ao buscar pedido: ${e}`)
-        }
-    } */
-
     orderById = async(id:string):Promise<OrderModel>=>{
         try{
             
@@ -56,51 +43,6 @@ export default class OrderData extends ConnectToDatabase{
             throw new Error(`Erro ao buscar pedido: ${e}`)
         }
     }
-
-
-    /* ordersByRestaurant = async(restaurant:string):Promise<OrderModel[]>=>{
-        try{
-            
-            const orders = await ConnectToDatabase.con(this.ORDER_TABLE).where({
-                restaurant
-            })
-            
-            return orders
-        }catch(e:any){
-            throw new Error(`Erro ao buscar pedido: ${e}`)
-        }
-    } */
-
-
-    /* activeRestaurantOrders = async(restaurant:string):Promise<OrderModel[]>=>{
-        try{
-            
-            const activeOrders = await ConnectToDatabase.con(this.ORDER_TABLE).where({
-                restaurant,
-                state: 'FINISHED'
-            })
-
-            return activeOrders
-        }catch(e:any){
-            throw new Error(`Erro ao buscar pedido: ${e}`)
-        }
-    } */
-
-
-    /* restaurantOrdersByClient = async(restaurant:string, client:string):Promise<OrderModel[]>=>{
-        try {
-
-            const orders = await ConnectToDatabase.con(this.ORDER_TABLE).where({
-                restaurant,
-                client,
-                state:'FINISHED'
-            })
-            
-            return orders
-        } catch (e:any) {
-            throw new Error(`Erro ao buscar pedidos: ${e}`)
-        }
-    } */
 
 
     activeOrders = async(client:string):Promise<OrderModel[]>=>{
@@ -208,19 +150,6 @@ export default class OrderData extends ConnectToDatabase{
         }
     }
 
-    /* changeOrder = async(id:string):Promise<void>=>{
-        try{
-
-            await ConnectToDatabase.con(this.ORDER_TABLE).update({
-                state: 'REQUESTED',
-                paymentmethod: null
-            }).where({ id })
-
-        }catch(e:any){
-            throw new Error(`Erro ao marcar pedido: ${e}`)
-        }
-    } */
-
 
     cleanOrdersHistory = async(client:string):Promise<void>=>{
         try{
@@ -266,17 +195,5 @@ export default class OrderData extends ConnectToDatabase{
             throw new Error(`Erro ao limpar histórico: ${e}`)
         }
     }
-
-    /* registAddressOrder = async(address:string, client:string):Promise<void>=>{
-        try{
-
-            await ConnectToDatabase.con(this.ORDER_TABLE)
-                .update({ address })
-                .where({ client })
-
-        }catch(e:any){
-            throw new Error(`Erro ao registrar endereço: ${e}`)
-        }
-    } */
    
 }

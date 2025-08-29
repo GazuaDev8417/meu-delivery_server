@@ -48,34 +48,6 @@ export default class RestaurantController{
         }
     }
 
-
-    /* restaurantById = async(req:Request, res:Response):Promise<void>=>{
-        try{
-
-            const restaurant = await this.restaurantBusiness.restaurantById(req)
-
-            res.status(200).send(restaurant)
-        }catch(e:any){
-            let statusCode = e.statusCode || 400
-            let message = e.error === undefined ? e.message : e.error.message
-            res.status(statusCode).send(message || e.sqlMessage)
-        }
-    } */
-
-
-    /* restaurantByToken = async(req:Request, res:Response):Promise<void>=>{
-        try{
-
-            const restaurant = await this.restaurantBusiness.restaurantByToken(req)
-
-            res.status(200).send(restaurant)
-        }catch(e:any){
-            let statusCode = e.statusCode || 400
-            let message = e.error === undefined ? e.message : e.error.message
-            res.status(statusCode).send(message || e.sqlMessage)
-        }
-    } */
-
 //PRODUCTS
     insertProduct = async(req:Request, res:Response):Promise<void>=>{
         try{
@@ -103,20 +75,6 @@ export default class RestaurantController{
             res.status(statusCode).send(message || e.sqlMessage)
         }
     }
-    
-    
-    /* restaurantMenu = async(req:Request, res:Response):Promise<void>=>{
-        try{
-
-            const products = await this.restaurantBusiness.restaurantMenu(req)
-
-            res.status(201).send(products)
-        }catch(e:any){
-            let statusCode = e.statusCode || 400
-            let message = e.error === undefined ? e.message : e.error.message
-            res.status(statusCode).send(message || e.sqlMessage)
-        }
-    } */ 
 
 
     deleteProduct = async(req:Request, res:Response):Promise<void>=>{

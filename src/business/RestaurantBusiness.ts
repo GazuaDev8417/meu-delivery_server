@@ -106,8 +106,6 @@ export default class RestaurantBusiness{
 
 
     getRestaurants = async(req:Request):Promise<RestaurantModel>=>{
-        //await new Services().authToken(req)
-
         const [restaurants] = await this.restaurantData.getRestaurants()
         
         if(!restaurants){
@@ -120,29 +118,8 @@ export default class RestaurantBusiness{
         return restaurants
     }
 
-
-    /* restaurantById = async(req:Request):Promise<RestaurantModel>=>{
-        const restaurant = await this.restaurantData.restaurantById(req.params.id)
-        if(!restaurant){
-            throw{
-                statusCode: 404,
-                error: new Error('Restaurante não encontrado')
-            }
-        }
-
-        return restaurant
-    } */
-
-
-    /* restaurantByToken = async(req:Request):Promise<RestaurantModel>=>{
-        const restaurant = await new Services().authToken_restaurant(req)
-
-        return restaurant
-    } */
-
 //PRODUCTS 
     insertProduct = async(req:Request):Promise<void>=>{
-         //const restaurant = await new Services().authToken_restaurant(req)
         const { category, description, name, photoUrl, price } = req.body
         const id = new Services().idGenerator()
         const product = new Product(
@@ -172,21 +149,6 @@ export default class RestaurantBusiness{
 
         return products
     }
-
-
-    /* restaurantMenu = async(req:Request):Promise<ProductModel[]>=>{
-        const restaurant = await new Services().authToken_restaurant(req)
-
-        const products = await this.restaurantData.productsByProvider()
-        if(products.length === 0){
-            throw{
-                statusCode: 404,
-                error: new Error('Cardápio não encontrado')
-            }
-        }
-
-        return products
-    } */
 
 
     deleteProduct = async(req:Request):Promise<string>=>{

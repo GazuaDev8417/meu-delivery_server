@@ -45,17 +45,7 @@ export default class OrderBusiness{
 
         await this.orderData.todo_orders(order)
     }
-
-
-    /* ordersByClient = async(req:Request):Promise<OrderModel[]>=>{
-         const token = req.headers.authorization
-         const userId = new Services().tokenData(token as string).payload
-
-         const orders = await this.orderData.ordersByClient(userId)
-        
-         return orders
-    } */
-
+    
 
     orderById = async(req:Request):Promise<OrderModel>=>{
         await new Services().authToken_restaurant(req)
@@ -64,22 +54,6 @@ export default class OrderBusiness{
        
         return order
    }
-
-    /* ordersByRestaurant = async(req:Request):Promise<OrderModel[]>=>{
-        const restaurant = await new Services().authToken_restaurant(req)
-
-        const orders = await this.orderData.ordersByRestaurant(restaurant.id)
-       
-        return orders
-   } */
-
-    /* restaurantOrdersByClient = async(req:Request):Promise<OrderModel[]>=>{
-        const restaurant = await new Services().authToken_restaurant(req)
-        
-        const orders = await this.orderData.restaurantOrdersByClient(restaurant.id, req.params.id)
-    
-        return orders
-    } */
 
 
     deleteOrder = async(req:Request):Promise<void>=>{
@@ -132,11 +106,6 @@ export default class OrderBusiness{
         await this.orderData.endOrder(req.params.id, paymentmethod)
     }
 
-    /* changeOrder = async(req:Request):Promise<void>=>{
-
-        await this.orderData.changeOrder(req.params.id)
-    } */
-
     
     activeOrders = async(req:Request):Promise<OrderModel[]>=>{
         const user = await new Services().authToken(req)
@@ -151,23 +120,6 @@ export default class OrderBusiness{
 
         return orders
     }
-
-
-    /* activeRestaurantOrders = async(req:Request):Promise<OrderModel[]>=>{
-        const restaurant = await new Services().authToken_restaurant(req)
-        const orders = await this.orderData.activeRestaurantOrders(restaurant.id)
-
-        return orders
-    } */
-
-    /* registAddressOrder = async(req:Request):Promise<void>=>{
-        const { street, cep, number, neighbourhood, city, state, complement, person } = req.body
-        const address = `${street} ${number}, ${cep}, ${neighbourhood} - ${city}/${state} - ${complement}, ${person}`
-        const token = req.headers.authorization
-        const userId = new Services().tokenData(token as string).payload
-
-        await this.orderData.registAddressOrder(address, userId)
-    } */
 
 
     orderPayment = async(req:Request)=>{
@@ -186,6 +138,7 @@ export default class OrderBusiness{
     
     pay = async(req:Request)=>{
         const { paymentMethodId, email, token, items } = req.body
+        const orderId = `${email}-${Date.now()}`
         const transaction_amount = items.reduce(
             (acc: number, item: any) => acc + (item.unit_price * item.quantity),
             0
@@ -194,7 +147,8 @@ export default class OrderBusiness{
             transaction_amount,
             description: 'Compra no app',
             payment_method_id: paymentMethodId,
-            payer: { email }
+            payer: { email },
+            external_reference: orderId
         }
 
 

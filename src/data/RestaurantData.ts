@@ -34,7 +34,7 @@ export default class RestaurantData extends ConnectToDatabase{
     }
 
 
-    /* restaurantById = async(id:string):Promise<RestaurantModel>=>{
+    restaurantById = async(id:string):Promise<RestaurantModel>=>{
         try{
 
             const [restaurant] = await ConnectToDatabase.con(this.RESTAURANT_TABLE)
@@ -45,7 +45,7 @@ export default class RestaurantData extends ConnectToDatabase{
         }catch(e:any){
             throw new Error(`Erro buscar restaurante: ${e}`)
         }
-    } */
+    }
 
 
     restaurantByCnpj = async(cnpj:string):Promise<RestaurantModel>=>{

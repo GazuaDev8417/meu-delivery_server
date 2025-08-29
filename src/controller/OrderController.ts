@@ -24,20 +24,6 @@ export default class OrderController{
     }
 
 
-    /* ordersByClient = async(req:Request, res:Response):Promise<void>=>{
-        try{
-
-            const orders = await this.orderBusiness.ordersByClient(req)        
-
-            res.status(200).send(orders)
-        }catch(e:any){
-            let statusCode = e.statusCode || 400
-            let message = e.error === undefined ? e.message : e.error.message
-            res.status(statusCode).send(message || e.sqlMessage)
-        }
-    } */
-
-
     orderById = async(req:Request, res:Response):Promise<void>=>{
         try{
 
@@ -50,33 +36,6 @@ export default class OrderController{
             res.status(statusCode).send(message || e.sqlMessage)
         }
     }
-
-    /* ordersByRestaurant = async(req:Request, res:Response):Promise<void>=>{
-        try{
-
-            const orders = await this.orderBusiness.ordersByRestaurant(req)           
-
-            res.status(200).send(orders)
-        }catch(e:any){
-            let statusCode = e.statusCode || 400
-            let message = e.error === undefined ? e.message : e.error.message
-            res.status(statusCode).send(message || e.sqlMessage)
-        }
-    } */
-
-
-    /* restaurantOrdersByClient = async(req:Request, res:Response):Promise<void>=>{
-        try{
-
-            const orders = await this.orderBusiness.restaurantOrdersByClient(req)           
-
-            res.status(200).send(orders)
-        }catch(e:any){
-            let statusCode = e.statusCode || 400
-            let message = e.error === undefined ? e.message : e.error.message
-            res.status(statusCode).send(message || e.sqlMessage)
-        }
-    } */
 
 
     deleteOrder = async(req:Request, res:Response):Promise<void>=>{
@@ -159,19 +118,6 @@ export default class OrderController{
         }
     }
 
-    /* changeOrder = async(req:Request, res:Response):Promise<void>=>{
-        try{
-            
-            await this.orderBusiness.changeOrder(req)
-            
-            res.status(200).end()
-        }catch(e:any){
-            let statusCode = e.statusCode || 400
-            let message = e.error === undefined ? e.message : e.error.message
-            res.status(statusCode).send(message || e.sqlMessage)
-        }
-    } */
-
 
     activeOrders = async(req:Request, res:Response):Promise<void>=>{
         try{
@@ -200,34 +146,6 @@ export default class OrderController{
         }
     }
 
-
-    /* activeRestaurantOrders = async(req:Request, res:Response):Promise<void>=>{
-        try{
-            
-            const orders = await this.orderBusiness.activeRestaurantOrders(req)
-            
-            res.status(200).send(orders)
-        }catch(e:any){
-            let statusCode = e.statusCode || 400
-            let message = e.error === undefined ? e.message : e.error.message
-            res.status(statusCode).send(message || e.sqlMessage)
-        }
-    } */
-
-
-    /* registAddressOrder = async(req:Request, res:Response):Promise<void>=>{
-        try{
-
-            await this.orderBusiness.registAddressOrder(req)
-
-            res.status(201).send('Endereço registrado com sucesso')
-        }catch(e:any){
-            let statusCode = e.statusCode || 400
-            let message = e.error === undefined ? e.message : e.error.message
-            res.status(statusCode).send(message || e.sqlMessage)
-        }
-    } */
-
     
     orderPyament = async(req:Request, res:Response):Promise<void>=>{
         try{
@@ -247,6 +165,7 @@ export default class OrderController{
             const response = await this.orderBusiness.pay(req)
 
             res.status(200).json({
+                orderId: response.data.external_reference,
                 status: response.data.status,
                 id: response.data.id,
                 payment_type: response.data.payment_type_id,

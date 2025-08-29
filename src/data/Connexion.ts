@@ -6,15 +6,15 @@ config()
 
 export default abstract class ConnectToDatabase{
     protected static con = knex({
-        /* client: 'pg',
-        connection: process.env.NEONTECH_DB */
-        client: 'mysql2',
+        client: 'pg',
+        connection: process.env.DISK90_DB
+        /* client: 'mysql2',
         connection: {
             host: process.env.DB_HOST,
             user: process.env.DB_USER,
             password: process.env.DB_PASSWORD,
             database: process.env.DB_SCHEMA
-        }
+        } */
     })
 
     public static testConnexion = async():Promise<void>=>{
