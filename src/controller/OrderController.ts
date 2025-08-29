@@ -1,9 +1,7 @@
 import { Request, Response } from "express"
 import OrderBusiness from "../business/OrderBusiness"
-import axios from "axios"
-import { config } from "dotenv"
 
-config()
+
 
 
 
@@ -232,15 +230,31 @@ export default class OrderController{
 
     
     orderPyament = async(req:Request, res:Response):Promise<void>=>{
-        const ACCESS_TOKEN = process.env.ACCESS_TOKEN
-        const { items } = req.body
         try{
-            const response = await axios.post(
-                'https://api.mercadopago.com/checkout/preferences',
-                { items },
-                { headers: { Authorization: `Bearer ${ACCESS_TOKEN}` }}
-            )
-            res.json({ init_point: response.data.init_point })
+            const response = await this.orderBusiness.orderPayment(req)
+
+            res.status(200).json({ init_point: response })
+        }catch(e:any){
+            let statusCode = e.statusCode || 400
+            let message = e.error === undefined ? e.message : e.error.message
+            res.status(statusCode).send(message || e.sqlMessage)
+        }
+    }
+
+
+    pay = async(req:Request, res:Response):Promise<void>=>{
+        try{
+            const response = await this.orderBusiness.pay(req)
+
+            res.status(200).json({
+                status: response.data.status,
+                id: response.data.id,
+                payment_type: response.data.payment_type_id,
+                qr_code: response.data.point_of_interaction?.transaction_data?.qr_code,
+                qr_code_base64: response.data.point_of_interaction?.transaction_data?.qr_code_base64,
+                qr_code_link: response.data.point_of_interaction?.transaction_data?.ticket_url
+                            || response.data.point_of_interaction?.transaction_data?.qr_code_link
+            })
         }catch(e:any){
             let statusCode = e.statusCode || 400
             let message = e.error === undefined ? e.message : e.error.message

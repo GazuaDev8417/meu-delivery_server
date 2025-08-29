@@ -4,7 +4,11 @@ import OrderData from "../data/OrderData"
 import Services from "../services/Authentication"
 import moment from "moment-timezone"
 import { OrderModel } from "../model/typesAndInterfaces"
+import axios from "axios"
+import { config } from "dotenv"
+import { v4 } from "uuid"
 
+config()
 
 
 
@@ -165,5 +169,54 @@ export default class OrderBusiness{
         await this.orderData.registAddressOrder(address, userId)
     } */
 
+
+    orderPayment = async(req:Request)=>{
+        const ACCESS_TOKEN = process.env.ACCESS_TOKEN
+        const { items } = req.body
+
+        const response = await axios.post(
+                'https://api.mercadopago.com/checkout/preferences',
+                { items },
+                { headers: { Authorization: `Bearer ${ACCESS_TOKEN}` }}
+            )
+
+        return response.data.init_point 
+    } 
     
+    
+    pay = async(req:Request)=>{
+        const { paymentMethodId, email, token, items } = req.body
+        const transaction_amount = items.reduce(
+            (acc: number, item: any) => acc + (item.unit_price * item.quantity),
+            0
+        )
+        const body:any = {
+            transaction_amount,
+            description: 'Compra no app',
+            payment_method_id: paymentMethodId,
+            payer: { email }
+        }
+
+
+        if(['visa', 'master', 'amex'].includes(paymentMethodId)){
+            body.token = token
+            body.installments = 1
+        }else{
+            delete body.installments
+        }
+
+        const response = await axios.post(
+            'https://api.mercadopago.com/v1/payments',
+            body,
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.ACCESS_TOKEN_TP}`,
+                    'X-Idempotency-Key': v4()
+                }
+            }
+        )
+
+        return response
+        
+    } 
 }
