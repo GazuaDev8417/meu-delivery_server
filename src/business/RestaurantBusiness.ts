@@ -126,7 +126,7 @@ export default class RestaurantBusiness{
             category, description, id, name, photoUrl, price
         )
 
-        const registeredProduct = await this.restaurantData.findProductByImage(photoUrl)
+        const registeredProduct = await this.restaurantData.findProductByName(name)
         if(registeredProduct){
             throw{
                 statusCode: 403,

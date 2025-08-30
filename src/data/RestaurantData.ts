@@ -71,10 +71,10 @@ export default class RestaurantData extends ConnectToDatabase{
     }
 
 
-    findProductByImage = async(url:string):Promise<ProductModel>=>{
+    findProductByName = async(name:string):Promise<ProductModel>=>{
         try{
 
-            const [product] = await ConnectToDatabase.con(this.PRODUCT_TABLE).where({ photoUrl: url })
+            const [product] = await ConnectToDatabase.con(this.PRODUCT_TABLE).where({ name })
 
             return product
         }catch(e:any){
