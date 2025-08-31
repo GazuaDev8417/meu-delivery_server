@@ -163,7 +163,6 @@ export default class OrderController{
     pay = async(req:Request, res:Response):Promise<void>=>{
         try{
             const response = await this.orderBusiness.pay(req)
-
             res.status(200).json({
                 orderId: response.data.external_reference,
                 status: response.data.status,

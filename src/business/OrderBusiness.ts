@@ -137,40 +137,55 @@ export default class OrderBusiness{
     
     
     pay = async(req:Request)=>{
-        const { paymentMethodId, email, token, items } = req.body
-        const orderId = `${email}-${Date.now()}`
-        const transaction_amount = items.reduce(
-            (acc: number, item: any) => acc + (item.unit_price * item.quantity),
-            0
-        )
-        const body:any = {
-            transaction_amount,
-            description: 'Compra no app',
-            payment_method_id: paymentMethodId,
-            payer: { email },
-            external_reference: orderId
-        }
+        try{
+            const { paymentMethodId, email, token, items } = req.body
+            const orderId = `${email}-${Date.now()}`
+            const transaction_amount = items.reduce(
+                (acc: number, item: any) => acc + (item.unit_price * item.quantity),
+                0
+            )
+
+            const transaction_amount_fixed = Number(transaction_amount).toFixed(2)
+            const body:any = {
+                transaction_amount: Number(transaction_amount_fixed),
+                description: 'Compra no app',
+                payment_method_id: paymentMethodId,
+                payer: { email },
+                external_reference: orderId
+            }
 
 
-        if(['visa', 'master', 'amex'].includes(paymentMethodId)){
-            body.token = token
-            body.installments = 1
-        }else{
-            delete body.installments
-        }
+            if(['visa', 'master', 'amex'].includes(paymentMethodId)){
+                body.token = token
+                body.installments = 1
+            }else{
+                delete body.installments
+            }
 
-        const response = await axios.post(
-            'https://api.mercadopago.com/v1/payments',
-            body,
-            {
-                headers: {
-                    Authorization: `Bearer ${process.env.ACCESS_TOKEN_TP}`,
-                    'X-Idempotency-Key': v4()
+            const response = await axios.post(
+                'https://api.mercadopago.com/v1/payments',
+                body,
+                {
+                    headers: {
+                        Authorization: `Bearer ${process.env.ACCESS_TOKEN_TP}`,
+                        'X-Idempotency-Key': v4()
+                    }
+                }
+            )
+
+            return response
+        }catch(e:any){
+            if(axios.isAxiosError(e)){
+                throw{
+                    statusCode: e.response?.status || 500,
+                    error: e.response?.data || e.message
                 }
             }
-        )
 
-        return response
-        
+            throw{
+                statusCode: e.statusCode || 500,
+                error: e.message || 'Erro interno ao processar pagamento'
+            }
+        }     
     } 
 }
