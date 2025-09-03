@@ -68,7 +68,7 @@ export default class RestaurantController{
 
             const products = await this.restaurantBusiness.productsByRestaurant()
 
-            res.status(201).send(products)
+            res.status(200).send(products)
         }catch(e:any){
             let statusCode = e.statusCode || 400
             let message = e.error === undefined ? e.message : e.error.message
