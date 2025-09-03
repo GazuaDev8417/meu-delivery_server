@@ -1,22 +1,19 @@
 import { Request, Response } from "express"
 import UserBusiness from "../business/UserBusiness"
-import User from "../model/User"
-import Services from "../services/Authentication"
 
 
 
-export default class UserController{
+export default class UserController {
     constructor(
-        private userBusiness:UserBusiness
-    ){}
-
-    signup = async(req:Request, res:Response):Promise<void>=>{
-        try{
-
+        private userBusiness: UserBusiness
+    ) {}
+    
+    signup = async(req: Request, res: Response): Promise<void> => {
+        try {
             const token = await this.userBusiness.signup(req)
 
             res.status(201).send(token)
-        }catch(e:any){
+        } catch (e: any) {
             let statusCode = e.statusCode || 400
             let message = e.error === undefined ? e.message : e.error.message
             res.status(statusCode).send(message || e.sqlMessage)
@@ -29,7 +26,7 @@ export default class UserController{
 
             const user = await this.userBusiness.getProfile(req)
 
-            res.status(201).send(user)
+            res.status(200).send(user)
         }catch(e:any){
             let statusCode = e.statusCode || 400
             let message = e.error === undefined ? e.message : e.error.message
@@ -80,7 +77,7 @@ export default class UserController{
     }
     
 
-    addressByUser = async(req:Request, res:Response):Promise<void>=>{
+    /* addressByUser = async(req:Request, res:Response):Promise<void>=>{
         try{
             
             const address:User = await this.userBusiness.addressByUser(req)
@@ -91,7 +88,7 @@ export default class UserController{
             let message = e.error === undefined ? e.message : e.error.message
             res.status(statusCode).send(message || e.sqlMessage)
         }
-    }
+    } */
 
 
     deleteUser = async(req:Request, res:Response):Promise<void>=>{

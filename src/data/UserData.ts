@@ -47,7 +47,10 @@ export default class UserData extends ConnectToDatabase{
         try{
 
             const [user] = await ConnectToDatabase.con(this.USER_TABLE)
-            .select('id', 'username', 'email', 'street', 'cep', 'number', 'neighbourhood', 'city', 'state', 'complement', 'phone')
+            .select(
+                'id', 'username', 'email', 'street', 'cep', 'number', 
+                'neighbourhood','city', 'state', 'complement', 'phone'
+            )
             .where({ id })
 
             return user
@@ -112,7 +115,7 @@ export default class UserData extends ConnectToDatabase{
     }
 
 
-    addressByUser = async(id:string):Promise<User>=>{
+    /* addressByUser = async(id:string):Promise<User>=>{
         try{
 
             const [address] = await ConnectToDatabase.con(this.USER_TABLE).select(
@@ -124,7 +127,7 @@ export default class UserData extends ConnectToDatabase{
         }catch(e:any){
             throw new Error(`Erro ao atualizar endereço: ${e}`)
         }
-    }
+    } */
 
 
     deleteUser = async(id:string):Promise<void>=>{

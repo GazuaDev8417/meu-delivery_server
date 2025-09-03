@@ -30,7 +30,7 @@ app.post('/signup', userController.signup)
 app.post('/login', userController.login)
 
 app.get('/profile', userController.getProfile)
-app.get('/address/', userController.addressByUser)
+//app.get('/address/', userController.addressByUser)
 
 app.patch('/user', userController.updateUser)
 app.patch('/user-address', userController.registAddress)

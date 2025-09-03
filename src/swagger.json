@@ -1,51 +1,50 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Ifuture API Documentation",
+    "title": "Documentação API Meu Delivery",
     "version": "1.0.0",
-    "description": "API documentation for the [Ifuture](https://gazuadev8417.github.io/ifuture_react/) project. A simulation of fastfood delivery application as personal project."
+    "description": "Documentação API para o projeto [Meu-Delivery](https://gazuadev8417.github.io/meu-delivery/). Uma simulação de aplicação delivery como projeto pessoal."
   },
   "tags": [
     {
-      "name": "User Management",
-      "description": "Operations related to user accounts"
+      "name": "Gerenciamento de usuário",
+      "description": "Operaões relacionadas à conta de usuário"
     },
     {
-      "name": "User's Profile Address Management",
-      "description": "Operations for managing user's profile address"
+      "name": "Gerenciamento de endereço de usuário",
+      "description": "Operações para gerenciar o endereço do usuário"
     },
     {
-      "name": "Restaurant Management",
-      "description": "Operations related to restaurant accounts"
-    },
-    {
-      "name": "Order Management",
-      "description": "Operations related to the orders made by users to restaurants"
+      "name": "Gerenciamento de pedidos",
+      "description": "Operações relacionadas aos pedidos feitos pelo usuário"
     }
   ],
   "servers": [
     {
-      "url": "https://ifuture-server.vercel.app",
-      "description": "Remote server"
+      "url": "https://meu-delivery-server.vercel.app",
+      "description": "Servidor remoto"
+    },
+    {
+      "url": "http://localhost:3003",
+      "description": "Servidor local"
     }
   ],
   "paths": {
     "/signup": {
       "post": {
-        "tags": ["User Management"],
-        "summary": "User Signup",
-        "description": "Registers a new user",
+        "tags": ["Gerenciamento de usuário"],
+        "summary": "Registro de usuário",
+        "description": "Cadastra um novo usuário",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": { "type": "string", "example": "New Guest" },
-                  "email": { "type": "string", "example": "newgust@email.com" },
-                  "cpf": { "type": "string", "example": "12345678910" },
-                  "password": { "type": "string", "example": "123456" },
-                  "confirmPass": { "type": "string", "example": "123456" }
+                  "name": { "type": "string", "example": "Visitante" },
+                  "email": { "type": "string", "example": "vistante@email.com" },
+                  "phone": { "type": "string", "example": "71984403071" },
+                  "password": { "type": "string", "example": "123456" }
                 },
                 "required": ["name", "email", "password", "confirmPass"]
               }
@@ -54,7 +53,7 @@
         },
         "responses": {
           "201": {
-            "description": "User created successfully",
+            "description": "Usuário registrado",
             "content": {
               "application/json": {
                 "schema": {
@@ -74,9 +73,9 @@
     },
     "/login": {
       "post": {
-        "tags": ["User Management"],
-        "summary": "User Login",
-        "description": "Logs in an existing user's account",
+        "tags": ["Gerenciamento de usuário"],
+        "summary": "Login de usuário",
+        "description": "Acessar conta de usuário",
         "requestBody": {
           "content": {
             "application/json": {
@@ -93,7 +92,7 @@
         },
         "responses": {
           "200": {
-            "description": "User logged in successfully",
+            "description": "Usuário logado com sucesso",
             "content": {
               "application/json": {
                 "schema": {
@@ -113,9 +112,9 @@
     },
     "/profile": {
       "get": {
-        "tags": ["User Management"],
-        "summary": "Get Profile",
-        "description": "Retrieves the profile of the logged-in user",
+        "tags": ["Gerenciamento de usuário"],
+        "summary": "Perfil do usuário",
+        "description": "Busca o perfil do usuário logado",
         "parameters": [
           {
             "name": "Authorization",
@@ -124,27 +123,29 @@
             "required": true,
             "schema": {
               "type": "string",
-              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwNjQ3NzAxfQ.Jhw3rQK2h6Uc0zStYuVM6fzvCVn066hBQzKw_wIS0PM"
+              "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiNDA0OTZkMjItMDc2MS00YzNiLTg5ZWQtMjgxM2I0YmQ5NjEzIiwiaWF0IjoxNzU2ODYwMzM4fQ.SLZgRxeRbGmZysj_qruQG-wBX-exSxKLgnP-Dndldu0"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "User profile retrieved",
+            "description": "Perfil do usuário",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "id": { "type": "string", "example": "4e7aebce-fd99-418d-ac2e-9844985c51e7" },
                     "username": { "type": "string", "example": "Visitante" },
                     "email": { "type": "string", "example": "visitante@email.com" },
                     "street": { "type": "string", "example": "Rua Meyer" },
                     "cep": { "type": "string", "example": "86015160" },
-                    "number": { "type": "string", "example": "" },
+                    "number": { "type": "string", "example": "130" },
                     "neighbourhood": { "type": "string", "example": "Jardim Higienópolis" },
                     "city": { "type": "string", "example": "Londrina" },
                     "state": { "type": "string", "example": "Paraná" },
-                    "complement": { "type": "string", "example": "" }
+                    "complement": { "type": "string", "example": "Próximo ao Supermercado Viscardi" },
+                    "phone": { "type": "string", "example": "71984403071" }
                   }
                 }
               }
@@ -336,366 +337,6 @@
         }
       }
     },
-    "/signup_restaurant": {
-      "post": {
-        "tags": ["Restaurant Management"],
-        "summary": "Restaurant Signup",
-        "description": "Registers a new restaurant",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "address": { "type": "string", "example": "" },
-                  "deliveryTime": { "type": "integer", "example": 0 },
-                  "description": { "type": "string", "example": "O Jeronimo Burger é uma rede de restaurantes conhecida por seus hambúrgueres artesanais e ambiente descontraído." },
-                  "logourl": { "type": "string", "example": "https://villaromanashopping.com.br/wp-content/uploads/2019/10/Banner_-jeronimo.png" },
-                  "shipping": { "type": "integer", "example": 0 },
-                  "cnpj": { "type": "string", "example": "XXXXXXXXYYYYZZ" },
-                  "password": { "type": "string", "example": "123456" },
-                  "confirmPass": { "type": "string", "example": "123456" }
-                },
-                "required": ["category", "description", "name", "password", "cnpj"]
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Restaurant registered successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwNjQ3NzAxfQ.Jhw3rQK2h6Uc0zStYuVM6fzvCVn066hBQzKw_wIS0PM" }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request"
-          }
-        }
-      }
-    },
-    "/products": {
-      "post": {
-        "tags": ["Restaurant Management"],
-        "summary": "Insert Products",
-        "description": "Inserting products in restaurant's menu",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwNjQ3NzAxfQ.Jhw3rQK2h6Uc0zStYuVM6fzvCVn066hBQzKw_wIS0PM"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "category": { "type": "string", "example": "Category's product" },
-                  "description": { "type": "string", "example": "The description of the product" },
-                  "name": { "type": "string", "example": "The name of the product" },
-                  "photoUrl": { "type": "string", "example": "The url's image address of the product" },
-                  "price": { "type": "integer", "example": "The product's price" }
-                },
-                "required": [ "category", "description", "name", "photoUrl", "price" ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Regists a new product",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": { "type": "string", "example": "Product registered successfully!" }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request"
-          }
-        }
-      }
-    },
-    "/login_restaurant": {
-      "post": {
-        "tags": ["Restaurant Management"],
-        "summary": "Restaurant Login",
-        "description": "Logs in an existing restaurant's account",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "cnpj": { "type": "string", "example": "XXXXXXXXYYYYZZ" },
-                  "password": { "type": "string", "example": "123456" }
-                },
-                "required": ["password", "cnpj"]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Restaurant logged in successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwNjQ3NzAxfQ.Jhw3rQK2h6Uc0zStYuVM6fzvCVn066hBQzKw_wIS0PM" }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/restaurants": {
-      "get": {
-        "tags": ["Restaurant Management"],
-        "summary": "Get Restaurants",
-        "description": "Retrieves a list of all restaurants",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": true,
-            "schema": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwOTU2MDI2fQ.XBXYv1T5eheqKgp883xicBuMW4tXVQFRq8g96oI6F6A" }
-          }
-        ],
-        "responses": {
-          "200": {
-          "description": "List of restaurants",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "address": { "type": "string", "example": "Nearest Address" },
-                    "category": { "type": "string", "example": "Fast Food" },
-                    "deliverytime": { "type": "integer", "example": "Delivery time" },
-                    "description": { "type": "string", "example": "Description of restaurant" },
-                    "id": { "type": "string", "example": "e3be50e8-aa0b-4439-82db-72668766983f" },
-                    "logourl": { "type": "string", "example": "Restaurant's image url" },
-                    "name": { "type": "string", "example": "Restaurant's name" },
-                    "shipping": { "type": "integer", "example": "Shipping's price" },
-                    "cnpj": { "type": "string", "example": "XXXXXXXXYYYYZZ" }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "400": {
-            "description": "Bad request"
-          }
-      }
-    }
-    },
-    "/restaurants/:id": {
-      "get": {
-        "tags": ["Restaurant Management"],
-        "summary": "Get Restaurant by its id",
-        "description": "Retrieves a restaurant's details",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": true,
-            "schema": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMxNTExODk3fQ.hfTmh7hfOSQ2SxJXlJoRQ7mA-f-TwUHOvo7HXqAaZPY" }
-          }
-        ],
-        "responses": {
-          "200": {
-          "description": "Restaurant's details",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "address": { "type": "string", "example": "Nearest Address" },
-                  "category": { "type": "string", "example": "Fast Food" },
-                  "deliverytime": { "type": "integer", "example": "Delivery time" },
-                  "description": { "type": "string", "example": "Description of restaurant" },
-                  "id": { "type": "string", "example": "e3be50e8-aa0b-4439-82db-72668766983f" },
-                  "logourl": { "type": "string", "example": "Restaurant's image url" },
-                  "name": { "type": "string", "example": "Restaurant's name" },
-                  "shipping": { "type": "integer", "example": "Shipping's price" },
-                  "cnpj": { "type": "string", "example": "XXXXXXXXYYYYZZ" }
-                }
-              }
-            }
-          }
-        },
-        "400": {
-            "description": "Bad request"
-          }
-      }
-    }
-    },
-    "/restaurant_products/:id": {
-      "get": {
-        "tags": ["Restaurant Management"],
-        "summary": "Get Restaurants' menu",
-        "description": "Retrieves a list of restaurants' products",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": true,
-            "schema": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwOTU2MDI2fQ.XBXYv1T5eheqKgp883xicBuMW4tXVQFRq8g96oI6F6A" }
-          }
-        ],
-        "responses": {
-          "200": {
-          "description": "Restaurants' menu",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "category": { "type": "string", "example": "Product's category" },
-                    "description": { "type": "string", "example": "Product's description" },
-                    "id": { "type": "string", "example": "Product's id" },
-                    "name": { "type": "string", "example": "Product's name" },
-                    "photoUrl": { "type": "string", "example": "Product's image url" },
-                    "price": { "type": "integer", "example": "Product price" },
-                    "provider": { "type": "string", "example": "Provider restaurant's id" }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "404": {
-            "description": "Not Found"
-          }
-      }
-    }
-    },
-    "/restaurant_orders": {
-      "get": {
-        "tags": ["Restaurant Management"],
-        "summary": "Get restaurant's requested orders",
-        "description": "Retrieves a list of requested orders by a logged-in user",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": true,
-            "schema": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwOTU2MDI2fQ.XBXYv1T5eheqKgp883xicBuMW4tXVQFRq8g96oI6F6A" }
-          }
-        ],
-        "responses": {
-          "200": {
-          "description": "List of orders",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "id": { "type": "string", "example": "e3be50e8-aa0b-4439-82db-72668766983f" },
-                    "product": { "type": "string", "example": "Product name" },
-                    "price": { "type": "integer", "example": "Product price" },
-                    "photoUrl": { "type": "string", "example": "Product's image url" },
-                    "quantity": { "type": "integer", "example": "Quantity of product" },
-                    "total": { "type": "integer", "example": "The total price - qunantity * price" },
-                    "moment": { "type": "string", "example": "Time and date of the requested order" },
-                    "restaurant": { "type": "integer", "example": "The provider restaurant of the product" },
-                    "client": { "type": "string", "example": "the logged-in user's id" },
-                    "state": { "type": "string", "example": "State of order" }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "404": {
-            "description": "Not Found"
-          }
-      }
-      }
-    },
-    "/active_restaurant_orders": {
-      "get": {
-        "tags": ["Restaurant Management"],
-        "summary": "Get restaurant's finished orders",
-        "description": "Retrieves a list of finished orders by a logged-in user",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Bearer token for authentication",
-            "required": true,
-            "schema": { "type": "string", "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjoiZTNiZTUwZTgtYWEwYi00NDM5LTgyZGItNzI2Njg3NjY5ODNmIiwiaWF0IjoxNzMwOTU2MDI2fQ.XBXYv1T5eheqKgp883xicBuMW4tXVQFRq8g96oI6F6A" }
-          }
-        ],
-        "responses": {
-          "200": {
-          "description": "List of orders",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "id": { "type": "string", "example": "e3be50e8-aa0b-4439-82db-72668766983f" },
-                    "product": { "type": "string", "example": "Product name" },
-                    "price": { "type": "integer", "example": "Product price" },
-                    "photoUrl": { "type": "string", "example": "Product's image url" },
-                    "quantity": { "type": "integer", "example": "Quantity of product" },
-                    "total": { "type": "integer", "example": "The total price - qunantity * price" },
-                    "moment": { "type": "string", "example": "Time and date of the requested order" },
-                    "restaurant": { "type": "integer", "example": "The provider restaurant of the product" },
-                    "client": { "type": "string", "example": "the logged-in user's id" },
-                    "state": { "type": "string", "example": "State of order" }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "404": {
-            "description": "Not Found"
-          }
-      }
-      }
-    }, 
     "/order": {
       "post": {
         "tags": ["Order Management"],

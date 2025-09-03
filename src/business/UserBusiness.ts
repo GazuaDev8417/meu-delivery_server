@@ -2,7 +2,7 @@ import { Request } from "express"
 import UserData from "../data/UserData"
 import Services from "../services/Authentication"
 import User from "../model/User"
-import { cepModel, UserModel } from "../model/typesAndInterfaces"
+import { UserModel } from "../model/typesAndInterfaces"
 
 
 
@@ -69,7 +69,6 @@ export default class UserBusiness{
 
     getProfile = async(req:Request):Promise<UserModel>=>{
         const user = await new Services().authToken(req)
-        
         const profile = await this.userData.getProfile(user.id)
 
         return profile
@@ -120,17 +119,24 @@ export default class UserBusiness{
     registAddress = async(req:Request):Promise<void>=>{
         const user = await new Services().authToken(req)
         const { street, cep, number, neighbourhood, city, state, complement } = req.body
-        const regex = /^\d{5}-\d{3}$/;
+        const regex = /^\d+$/
         
         /* let finalStreet = street
         let finalNeighbourhood = neighbourhood
         let finalCity = city
         let finalState = state */
 
+        if(!street || !cep || !neighbourhood || !city || !state || !complement){
+            throw{
+                statusCode: 401,
+                error: new Error('Preencha os campos')
+            }
+        }
+
         if(!regex.test(cep)){
             throw{
                 statusCode: 403,
-                error: new Error('Cep inválido!')
+                error: new Error('Cep inválido! Deve conter apenas números')
             }
         }/* else{
             const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
@@ -171,7 +177,7 @@ export default class UserBusiness{
     }
 
 
-    addressByUser = async(req:Request):Promise<User>=>{
+    /* addressByUser = async(req:Request):Promise<User>=>{
         const user = await new Services().authToken(req)
         const address = await this.userData.addressByUser(user.id)
         const checkdAddress = Object.values(address).some(value => value !== null)
@@ -184,7 +190,7 @@ export default class UserBusiness{
         }
         
         return address
-    }
+    } */
 
 
     deleteUser = async(req:Request):Promise<void>=>{
