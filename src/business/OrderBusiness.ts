@@ -187,5 +187,26 @@ export default class OrderBusiness{
                 error: e.message || 'Erro interno ao processar pagamento'
             }
         }     
-    } 
+    }
+    
+    
+    paymentStatus = async(req:Request):Promise<string>=>{
+        const { id } = req.params
+
+        try{
+            
+            const res = await axios.get(`https://api.mercadopago.com/v1/payments/${id}`, {
+                headers: { Authorization: `Bearer ${process.env.ACCESS_TOKEN_TP}` }
+            })
+
+            const data = await res.data
+            return data.status                       
+        }catch(e:any){
+            if(e.response){
+                return e.response.status
+            }else{
+                throw new Error(e.message)
+            }
+        }
+    }
 }

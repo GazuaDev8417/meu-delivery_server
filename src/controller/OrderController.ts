@@ -12,7 +12,7 @@ export default class OrderController{
 
     todo_orders = async(req:Request, res:Response):Promise<void>=>{
         try{
-
+            
             await this.orderBusiness.todo_orders(req)
 
             res.status(200).send(`${req.body.product} adicionado aos pedidos. Gostaria de verificar?`)
@@ -173,6 +173,19 @@ export default class OrderController{
                 qr_code_link: response.data.point_of_interaction?.transaction_data?.ticket_url
                             || response.data.point_of_interaction?.transaction_data?.qr_code_link
             })
+        }catch(e:any){
+            let statusCode = e.statusCode || 400
+            let message = e.error === undefined ? e.message : e.error.message
+            res.status(statusCode).send(message || e.sqlMessage)
+        }
+    }
+
+
+    paymentStatus = async(req:Request, res:Response):Promise<void>=>{
+        try{
+            const response = await this.orderBusiness.paymentStatus(req)
+
+            res.status(200).json({ status: response })
         }catch(e:any){
             let statusCode = e.statusCode || 400
             let message = e.error === undefined ? e.message : e.error.message

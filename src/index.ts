@@ -50,6 +50,7 @@ app.post('/order', orderController.todo_orders)
 app.post('/payment_preferences', orderController.orderPyament)
 app.post('/pay', orderController.pay)
 
+app.get('/payment-status/:id', orderController.paymentStatus)
 app.get('/order/:id', orderController.orderById)
 app.get('/active_orders', orderController.activeOrders)
 app.get('/finished_orders', orderController.finishedOrders)
