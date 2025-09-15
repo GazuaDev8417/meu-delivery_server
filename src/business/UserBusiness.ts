@@ -12,7 +12,7 @@ export default class UserBusiness{
     ){}
 //USER FIELD
     signup = async(req:Request):Promise<string>=>{
-        const { name, email, phone, password } = req.body
+        const { name, email, phone, password, role } = req.body
         const regexEmail = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/
         const regexPhone = /^(\d{2})9\d{8}$/;
 
@@ -38,6 +38,13 @@ export default class UserBusiness{
             }
         }
 
+        if(password.length < 6){
+            throw{
+                statusCode: 403,
+                error: new Error('Sua senha deve ter o mínimo de 6 caractéres')
+            }
+        }
+
         const registeredUser = await this.userData.findByEmail(email)
         if(registeredUser){            
             throw{
@@ -58,24 +65,37 @@ export default class UserBusiness{
         const hash = new Services().hash(password)
         const token = new Services().token(id)
 
-        const user = new User(id, name, email, phone, hash)
+        const user = new User(id, name, email, phone, hash, role)
 
         await this.userData.create(user)
 
         return token
-
     }
 
 
     getProfile = async(req:Request):Promise<UserModel>=>{
+        const profile = await new Services().authToken(req)
+
+        return profile
+    }
+
+    getProfileByUser = async(req:Request):Promise<UserModel>=>{
         const user = await new Services().authToken(req)
-        const profile = await this.userData.getProfile(user.id)
+
+        if(user.role !== 'ADM'){
+            throw{
+                statusCode: 401,
+                error: new Error('Somente para usuário ADM')
+            }
+        }
+
+        const profile = await this.userData.getProfile(req.params.id)
 
         return profile
     }
 
 
-    login = async(req:Request):Promise<string>=>{
+    login = async(req:Request):Promise<{ token:string, role:string}>=>{
         const { email, password } = req.body
         const regex = /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/
 
@@ -112,14 +132,14 @@ export default class UserBusiness{
 
         const token = new Services().token(registeredUser.id)
 
-        return token
+        return { token, role: registeredUser.role }    
     }
 
 
     registAddress = async(req:Request):Promise<void>=>{
         const user = await new Services().authToken(req)
         const { street, cep, number, neighbourhood, city, state, complement } = req.body
-        const regex = /^\d+$/
+        /* const regex = /^\d+$/ */
         
         /* let finalStreet = street
         let finalNeighbourhood = neighbourhood
@@ -133,12 +153,12 @@ export default class UserBusiness{
             }
         }
 
-        if(!regex.test(cep)){
+        /* if(!regex.test(cep)){
             throw{
                 statusCode: 403,
                 error: new Error('Cep inválido! Deve conter apenas números')
             }
-        }/* else{
+        } *//* else{
             const res = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
             const data:cepModel = await res.json()
 

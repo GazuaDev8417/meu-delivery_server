@@ -44,6 +44,21 @@ export default class OrderData extends ConnectToDatabase{
         }
     }
 
+    
+    getAllOrders = async()=>{
+        try{
+            
+            const orders = await ConnectToDatabase.con(this.ORDER_TABLE)
+
+            if(orders.length === 0){
+                throw new Error('Nenhum pedido realizado')
+            }
+            
+            return orders
+        }catch(e:any){
+            throw new Error(`Erro ao buscar pedido: ${e}`)
+        }
+    }
 
     activeOrders = async(client:string):Promise<OrderModel[]>=>{
         try{
@@ -61,6 +76,22 @@ export default class OrderData extends ConnectToDatabase{
         }
     }
 
+    activeOrdersByUser = async(client:string):Promise<OrderModel[]>=>{
+        try{
+            
+            const activeOrders = await ConnectToDatabase.con(this.ORDER_TABLE)
+                .where({ client })
+                .whereIn('state', ['REQUESTED', 'FINISHED'])
+
+            if(activeOrders.length === 0){
+                throw new Error('Você ainda não fez nenhum pedido')
+            }
+            
+            return activeOrders
+        }catch(e:any){
+            throw new Error(`Erro ao buscar pedido: ${e}`)
+        }
+    }
 
     finishedOrders = async(client:string):Promise<OrderModel[]>=>{
         try{

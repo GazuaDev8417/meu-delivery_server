@@ -4,7 +4,8 @@ export interface UserModel{
     email:string
     phone:string
     password:string
-    street:string,
+    street:string
+    role:string
     cep:string
     number:string 
     neighbourhood:string,

@@ -10,7 +10,8 @@ export default class User extends ConnectToDatabase{
         private username:string,
         private email:string,
         private phone:string,
-        private password:string
+        private password:string,
+        private role:string
     ){ super() }
 
     save = async()=>{
@@ -20,10 +21,11 @@ export default class User extends ConnectToDatabase{
                 username: this.username.trim(),
                 email: this.email.trim(),
                 phone: this.phone.trim(),
-                password: this.password.trim()
+                password: this.password.trim(),
+                role: this.role.trim()
             })
-        }catch(e){
-            throw new Error(`Erro ao registrar usuário: ${e}`)
+        }catch(e:any){
+            throw new Error(e)
         }
     }
 }

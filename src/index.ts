@@ -30,6 +30,7 @@ app.post('/signup', userController.signup)
 app.post('/login', userController.login)
 
 app.get('/profile', userController.getProfile)
+app.get('/profile/:id', userController.getProfileByuser)
 //app.get('/address/', userController.addressByUser)
 
 app.patch('/user', userController.updateUser)
@@ -53,6 +54,8 @@ app.post('/pay', orderController.pay)
 app.get('/payment-status/:id', orderController.paymentStatus)
 app.get('/order/:id', orderController.orderById)
 app.get('/active_orders', orderController.activeOrders)
+app.get('/user/active_orders/:id', orderController.activeOrdersByUser)
+app.get('/orders', orderController.getAllOrders)
 app.get('/finished_orders', orderController.finishedOrders)
 
 app.patch('/order/:id', orderController.updateOrder)
