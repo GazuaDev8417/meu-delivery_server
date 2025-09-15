@@ -81,7 +81,6 @@ export default class OrderData extends ConnectToDatabase{
             
             const activeOrders = await ConnectToDatabase.con(this.ORDER_TABLE)
                 .where({ client })
-                .whereIn('state', ['REQUESTED', 'FINISHED'])
 
             if(activeOrders.length === 0){
                 throw new Error('Você ainda não fez nenhum pedido')

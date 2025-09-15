@@ -140,7 +140,8 @@ export default class OrderBusiness{
                 error: new Error('Somente para usuários ADM')
             }
         }
-        const orders = await this.orderData.activeOrders(req.params.id)
+
+        const orders = await this.orderData.activeOrdersByUser(req.params.id)
 
         return orders
     }
