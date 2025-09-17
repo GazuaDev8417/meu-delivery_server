@@ -24,7 +24,7 @@ export default class RestaurantData extends ConnectToDatabase{
         try{
 
             const restaurants = await ConnectToDatabase.con(this.RESTAURANT_TABLE).select(
-                'address', 'phone', 'category', 'description', 'id', 'name', 'cnpj', 'logourl'
+                'address', 'phone', 'category', 'description', 'id', 'name', 'cnpj', 'logourl', 'email'
             )
 
             return restaurants
@@ -38,7 +38,7 @@ export default class RestaurantData extends ConnectToDatabase{
         try{
 
             const [restaurant] = await ConnectToDatabase.con(this.RESTAURANT_TABLE)
-            .select('address', 'category', 'description', 'id', 'name', 'cnpj', 'logourl')
+            .select('address', 'category', 'description', 'id', 'name', 'cnpj', 'logourl', 'email')
             .where({ id })
 
             return restaurant
@@ -48,10 +48,10 @@ export default class RestaurantData extends ConnectToDatabase{
     }
 
 
-    restaurantByCnpj = async(cnpj:string):Promise<RestaurantModel>=>{
+    restaurantByEmail = async(email:string):Promise<RestaurantModel>=>{
         try{
 
-            const [restaurant] = await ConnectToDatabase.con(this.RESTAURANT_TABLE).where({ cnpj })
+            const [restaurant] = await ConnectToDatabase.con(this.RESTAURANT_TABLE).where({ email })
 
             return restaurant
         }catch(e:any){

@@ -100,9 +100,16 @@ export default class OrderBusiness{
     }
 
     endOrder = async(req:Request):Promise<void>=>{
-        await new Services().authToken(req)
+        await new Services().authToken_restaurant(req)
         
         const { paymentmethod } = req.body
+        
+        if(!paymentmethod){
+            throw{
+                statusCode: 403,
+                error: new Error('Selecione um método de pagamento')
+            }
+        }
 
         await this.orderData.endOrder(req.params.id, paymentmethod)
     }
@@ -127,6 +134,19 @@ export default class OrderBusiness{
     activeOrders = async(req:Request):Promise<OrderModel[]>=>{
         const user = await new Services().authToken(req)
         const orders = await this.orderData.activeOrders(user.id)
+
+        return orders
+    }
+
+    allOrders = async(req:Request):Promise<OrderModel[]>=>{
+        const orders = await this.orderData.allOrders()
+
+        if(orders.length === 0){
+            throw{
+                statusCode: 404,
+                error: new Error('Lista de pedidos vazia')
+            }
+        }
 
         return orders
     }

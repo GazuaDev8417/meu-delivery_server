@@ -76,6 +76,21 @@ export default class OrderData extends ConnectToDatabase{
         }
     }
 
+    allOrders = async():Promise<OrderModel[]>=>{
+        try{
+            
+            const activeOrders = await ConnectToDatabase.con(this.ORDER_TABLE)
+
+            if(activeOrders.length === 0){
+                throw new Error('Você ainda não fez nenhum pedido')
+            }
+            
+            return activeOrders
+        }catch(e:any){
+            throw new Error(`Erro ao buscar pedido: ${e}`)
+        }
+    }
+
     activeOrdersByUser = async(client:string):Promise<OrderModel[]>=>{
         try{
             
@@ -125,6 +140,7 @@ export default class OrderData extends ConnectToDatabase{
         try{
             
             const [order] = await ConnectToDatabase.con(this.ORDER_TABLE).where({ id })
+            
             await ConnectToDatabase.con(this.ORDER_TABLE).update({
               quantity,
               total: quantity * order.price
@@ -144,7 +160,6 @@ export default class OrderData extends ConnectToDatabase{
                     client: id,
                     state: 'REQUESTED'
                 })
-
             
             if(orders.length === 0){
                 throw new Error('Todos os pedidos já foram finalizados')

@@ -52,7 +52,7 @@ export default class UserData extends ConnectToDatabase{
                 'neighbourhood','city', 'state', 'complement', 'phone'
             )
             .where({ id })
-
+            
             return user
         }catch(e:any){
             throw new Error(`Erro ao buscar usuário: ${e}`)

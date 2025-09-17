@@ -3,6 +3,7 @@ import cors from 'cors'
 import { config } from 'dotenv'
 import paymentRoutes from './routes/paymentRoutes'
 
+
 config()
  
 
@@ -27,6 +28,10 @@ app.use(cors({
     credentials: true
 }))
 
+
+/* import Authentication from './services/Authentication'
+const hash = new Authentication().hash('123456')
+console.log(hash) */
 
 
 app.listen(PORT, ()=>{ 

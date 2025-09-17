@@ -14,7 +14,7 @@ export default class RestaurantBusiness{
     ){}
     
     signupRestaurant = async(req:Request):Promise<string>=>{
-        const { name, address , phone, description, logourl, cnpj, password } = req.body
+        const { name, address , phone, email, description, logourl, cnpj, password } = req.body
 
         if(!cnpj){
             throw{
@@ -56,7 +56,7 @@ export default class RestaurantBusiness{
             }
         } */
 
-        const registeredRestaurant = await this.restaurantData.restaurantByCnpj(cnpj)
+        const registeredRestaurant = await this.restaurantData.restaurantByEmail(email)
         if(registeredRestaurant){
             throw{
                 statusCode: 403,
@@ -71,18 +71,18 @@ export default class RestaurantBusiness{
 
 
     loginRestaurant = async(req:Request):Promise<string>=>{
-        const { cnpj, password } = req.body
-        const isUserValidation:boolean = req.body.isUserValidation
+        const { email, password } = req.body
         
-        if(!cnpj || !password){
+        if(!email || !password){
             throw{
                 statusCode: 401,
-                error: new Error('Insira as credenciais para logar(CNPJ e senha)')
+                error: new Error('Insira as credenciais para logar(email e senha)')
             }
         }
 
         
-        const registeredRestaurant = await this.restaurantData.restaurantByCnpj(cnpj)
+        const registeredRestaurant = await this.restaurantData.restaurantByEmail(email)
+        
         if(!registeredRestaurant){
             throw{
                 statusCode: 404,
@@ -91,6 +91,7 @@ export default class RestaurantBusiness{
         }
 
         const compare = new Services().compare(password, registeredRestaurant.password)
+        
         if(!compare){
             throw{
                 statusCode: 404,
@@ -101,7 +102,7 @@ export default class RestaurantBusiness{
         const token = new Services().token(registeredRestaurant.id)
 
         
-        return isUserValidation ? registeredRestaurant.id : token
+        return token
     }
 
 
