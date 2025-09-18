@@ -66,7 +66,7 @@ export default class RestaurantController{
     productsByRestaurant = async(req:Request, res:Response):Promise<void>=>{
         try{
 
-            const products = await this.restaurantBusiness.productsByRestaurant()
+            const products = await this.restaurantBusiness.productsByRestaurant(req)
 
             res.status(200).send(products)
         }catch(e:any){

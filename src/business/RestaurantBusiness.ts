@@ -139,8 +139,11 @@ export default class RestaurantBusiness{
     }
 
 
-    productsByRestaurant = async():Promise<ProductModel[]>=>{
-        const products = await this.restaurantData.productsByProvider()
+    productsByRestaurant = async(req:Request):Promise<ProductModel[]>=>{
+        await new Services().authToken_restaurant(req)
+        
+        const products = await this.restaurantData.productsByRestaurant()
+        
         if(products.length === 0){
             throw{
                 statusCode: 404,

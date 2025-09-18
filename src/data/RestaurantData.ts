@@ -83,7 +83,7 @@ export default class RestaurantData extends ConnectToDatabase{
     }
 
 
-    productsByProvider = async():Promise<ProductModel[]>=>{
+    productsByRestaurant = async():Promise<ProductModel[]>=>{
         try{
 
             const products = await ConnectToDatabase.con(this.PRODUCT_TABLE)
