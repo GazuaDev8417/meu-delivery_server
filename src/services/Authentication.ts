@@ -55,13 +55,6 @@ export default class Services{
         const token = req.headers.authorization
         const tokenData =  new Services().tokenData(token as string)
         const user = await new UserData().getProfile(tokenData.payload)
-        
-        if(!user){
-            throw{
-                statusCode: 404,
-                error: new Error('Usuário não encontrado')
-            }
-        }
     
         return user
     }
