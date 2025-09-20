@@ -1,6 +1,6 @@
 # API Meu Delivery - Node.js + Mercado Pago + PostgreSQL
 
-API desenvolvida em **Node.js** para simulação de um sistema de delivery com integração a pagamentos online.  
+API desenvolvida em **Node.js** para gerenciar um sistema de delivery com integração a pagamentos online.  
 O projeto foi estruturado seguindo boas práticas de arquitetura em camadas(controllers, business, data), integrações externas e persistência em banco de dados em nuvem.
 
 
