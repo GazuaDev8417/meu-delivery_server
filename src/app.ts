@@ -29,10 +29,6 @@ app.use(cors({
 }))
 
 
-/* import Authentication from './services/Authentication'
-const hash = new Authentication().hash('123456')
-console.log(hash) */
-
 
 app.listen(PORT, ()=>{ 
     console.log(`Servidor rodando em http://localhost:${PORT}`)

@@ -81,15 +81,9 @@ export default class UserBusiness{
 
     getProfileByUser = async(req:Request):Promise<UserModel>=>{
         const user = await new Services().authToken(req)
-        const restaurant = await new Services().authToken_restaurant(req)
 
 
         if(user && user.role !== 'ADM'){
-            throw{
-                statusCode: 401,
-                error: new Error('Somente para estabelecimentos ou usuário ADM')
-            }
-        }else if(!restaurant){
             throw{
                 statusCode: 401,
                 error: new Error('Somente para estabelecimentos ou usuário ADM')

@@ -63,6 +63,7 @@ export default class Services{
         const token = req.headers.authorization
         const tokenData =  new Services().tokenData(token as string)
         const restaurant = await new RestaurantData().restaurantById(tokenData.payload)
+        console.log(restaurant)
     
         if(!restaurant){
             throw{
