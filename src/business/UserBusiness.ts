@@ -82,10 +82,11 @@ export default class UserBusiness{
     getProfileByUser = async(req:Request):Promise<UserModel>=>{
         const user = await new Services().authToken(req)
 
-        if(user.role !== 'ADM'){
+
+        if(user && user.role !== 'ADM'){
             throw{
                 statusCode: 401,
-                error: new Error('Somente para usuário ADM')
+                error: new Error('Somente para estabelecimentos ou usuário ADM')
             }
         }
 
