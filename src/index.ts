@@ -56,7 +56,6 @@ app.get('/order/:id', orderController.orderById)
 app.get('/active_orders', orderController.activeOrders)
 app.get('/restaurant/orders', orderController.allOrders)
 app.get('/user/active_orders/:id', orderController.activeOrdersByUser)
-app.get('/orders', orderController.getAllOrders)
 app.get('/finished_orders', orderController.finishedOrders)
 
 app.patch('/order/:id', orderController.updateOrder)

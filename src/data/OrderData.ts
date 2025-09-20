@@ -45,7 +45,7 @@ export default class OrderData extends ConnectToDatabase{
     }
 
     
-    getAllOrders = async()=>{
+    allOrders = async()=>{
         try{
             
             const orders = await ConnectToDatabase.con(this.ORDER_TABLE)
@@ -65,21 +65,6 @@ export default class OrderData extends ConnectToDatabase{
             
             const activeOrders = await ConnectToDatabase.con(this.ORDER_TABLE)
                 .where({ client, state: 'REQUESTED' })
-
-            if(activeOrders.length === 0){
-                throw new Error('Você ainda não fez nenhum pedido')
-            }
-            
-            return activeOrders
-        }catch(e:any){
-            throw new Error(`Erro ao buscar pedido: ${e}`)
-        }
-    }
-
-    allOrders = async():Promise<OrderModel[]>=>{
-        try{
-            
-            const activeOrders = await ConnectToDatabase.con(this.ORDER_TABLE)
 
             if(activeOrders.length === 0){
                 throw new Error('Você ainda não fez nenhum pedido')

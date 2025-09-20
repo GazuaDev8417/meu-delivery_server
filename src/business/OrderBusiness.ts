@@ -7,7 +7,7 @@ import { OrderModel } from "../model/typesAndInterfaces"
 import axios from "axios"
 import { config } from "dotenv"
 import { v4 } from "uuid"
-import { UserModel } from "../model/typesAndInterfaces"
+
 
 config()
 
@@ -114,22 +114,6 @@ export default class OrderBusiness{
         await this.orderData.endOrder(req.params.id, paymentmethod)
     }
 
-
-    getAllOrders = async(req:Request):Promise<OrderModel[]>=>{
-        const user = await new Services().authToken(req)
-
-        if(user.role !== 'ADM'){
-            throw{
-                statusCode: 401,
-                error: new Error('Somente para ususários adm')
-            }
-        }
-
-        const orders = await this.orderData.getAllOrders()
-
-        return orders
-    }
-
     
     activeOrders = async(req:Request):Promise<OrderModel[]>=>{
         const user = await new Services().authToken(req)
@@ -139,7 +123,15 @@ export default class OrderBusiness{
     }
 
     allOrders = async(req:Request):Promise<OrderModel[]>=>{
+        const user = await new Services().authToken(req)
         const orders = await this.orderData.allOrders()
+
+        if(user.role !== 'ADM'){
+            throw{
+                statusCode: 401,
+                error: new Error('Somente para usuários ADM')
+            }
+        }
 
         if(orders.length === 0){
             throw{
