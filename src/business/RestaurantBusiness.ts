@@ -90,6 +90,13 @@ export default class RestaurantBusiness{
             }
         }
 
+        if(registeredRestaurant.role !== 'ADM'){
+            throw{
+                statusCode: 401,
+                error: new Error('Somente para usuários ADM')
+            }
+        }
+
         const compare = new Services().compare(password, registeredRestaurant.password)
         
         if(!compare){

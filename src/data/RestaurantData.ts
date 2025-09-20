@@ -1,13 +1,15 @@
 import ConnectToDatabase from "./Connexion"
 import Restaurant from "../model/Restaurant"
 import Product from "../model/Products"
-import { ProductModel, RestaurantModel } from "../model/typesAndInterfaces"
+import { ProductModel, RestaurantModel, UserModel } from "../model/typesAndInterfaces"
 
 
 
 export default class RestaurantData extends ConnectToDatabase{
     protected RESTAURANT_TABLE = 'restaurants'
     protected PRODUCT_TABLE = 'products'
+    protected USERS_TABLE = 'users'
+
 
     signupRestaurant = async(restaurant:Restaurant):Promise<void>=>{
         try{
@@ -48,10 +50,10 @@ export default class RestaurantData extends ConnectToDatabase{
     }
 
 
-    restaurantByEmail = async(email:string):Promise<RestaurantModel>=>{
+    restaurantByEmail = async(email:string):Promise<UserModel>=>{
         try{
 
-            const [restaurant] = await ConnectToDatabase.con(this.RESTAURANT_TABLE).where({ email })
+            const [restaurant] = await ConnectToDatabase.con(this.USERS_TABLE).where({ email })
 
             return restaurant
         }catch(e:any){
