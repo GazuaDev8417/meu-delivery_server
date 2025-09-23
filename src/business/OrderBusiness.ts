@@ -133,6 +133,8 @@ export default class OrderBusiness{
         const user = await new Services().authToken(req)
         const orders = await this.orderData.activeOrders(user.id)
 
+        await this.removeOldOrders(orders)
+
         return orders
     }
 
@@ -152,10 +154,28 @@ export default class OrderBusiness{
                 statusCode: 404,
                 error: new Error('Lista de pedidos vazia')
             }
-        }
+        } 
+        
+        await this.removeOldOrders(orders)
 
         return orders
     }
+
+
+    removeOldOrders = async(orders:OrderModel[]):Promise<void>=>{
+        orders.map(async order=>{
+            const momentDate = order.moment.split(' ')[0]
+            const momentDateSplitted = Number(momentDate.split('/')[0])
+            const now = new Date().toISOString()
+            const localMoment = moment.utc(now).tz("America/Sao_Paulo").format('DD/MM/YYYY')
+            const localMomentSplitted = Number(localMoment.split('/')[0])
+            
+            if(momentDateSplitted < localMomentSplitted){
+                await this.orderData.deleteOrder(order.id)
+            }
+        })
+    }
+
 
     activeOrdersByUser = async(req:Request):Promise<OrderModel[]>=>{
         const user = await new Services().authToken(req)
@@ -175,6 +195,8 @@ export default class OrderBusiness{
     finishedOrders = async(req:Request):Promise<OrderModel[]>=>{
         const user = await new Services().authToken(req)
         const orders = await this.orderData.finishedOrders(user.id)
+
+        await this.removeOldOrders(orders)
 
         return orders
     }

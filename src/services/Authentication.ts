@@ -58,8 +58,6 @@ export default class Services{
     
         return user
     }
-<<<<<<< HEAD
-=======
 
     authToken_restaurant = async(req:Request):Promise<RestaurantModel>=>{
         const token = req.headers.authorization
@@ -76,6 +74,5 @@ export default class Services{
     
         return restaurant
     }
->>>>>>> 94ce598c5cbaab303f04df34f64b81853d2a12ca
     
 }
