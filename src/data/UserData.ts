@@ -72,7 +72,40 @@ export default class UserData extends ConnectToDatabase{
             throw new Error(`Erro ao buscar usuário: ${e}`)
         }
     }
+
+
+    saveResetToken = async(id:string, token:string):Promise<void>=>{
+        try{
+            await ConnectToDatabase.con(this.USER_TABLE).update({
+                reset_token: token
+            }).where({ id })
+        }catch(e:any){
+            throw new Error(`Erro ao buscar usuário: ${e}`)
+        }
+    }    
     
+
+    updatePassword = async(id:string, newPassword:string):Promise<void>=>{
+        try{
+            await ConnectToDatabase.con(this.USER_TABLE).update({
+                password: newPassword
+            }).where({ id })
+        }catch(e:any){
+            throw new Error(`Erro ao buscar usuário: ${e}`)
+        }
+    }
+
+
+    clearResetToken = async(id:string):Promise<void>=>{
+        try{
+            await ConnectToDatabase.con(this.USER_TABLE).update({
+                reset_token: null
+            }).where({ id })
+        }catch(e:any){
+            throw new Error(`Erro ao buscar usuário: ${e}`)
+        }
+    }
+
     
     registAddress = async(
         street:string,

@@ -137,6 +137,51 @@ export default class UserBusiness{
     }
 
 
+    requestPasswordReset = async(req:Request):Promise<void>=>{
+        const { email } = req.body
+
+        if(!email){
+            throw{
+                statusCode: 404,
+                error: new Error('Necessário informar o email')
+            }
+        }
+
+        const user = await this.userData.findByEmail(email)
+
+        if(!user){
+            throw{
+                statusCode: 404,
+                error: new Error('Se existir uma conta, um email será enviado')
+            }
+        }
+
+        const token = new Services().resetToken(user.id)
+
+        await this.userData.saveResetToken(user.id, token)
+           
+    }
+
+
+    confirmPasswordReset = async(req:Request):Promise<void>=>{
+        const { email, token, newPassword } = req.body
+
+        if(!email || !token || !newPassword){
+            throw{
+                statusCode: 401,
+                error: new Error('Token inválido, ou insira email e nova senha')
+            }
+        }
+
+        const user = await this.userData.findByEmail(email)
+
+        const hash = new Services().hash(newPassword)
+        await this.userData.updatePassword(user.id, hash)
+        await this.userData.clearResetToken(user.id)
+           
+    }
+
+
     registAddress = async(req:Request):Promise<void>=>{
         const user = await new Services().authToken(req)
         const { street, cep, number, neighbourhood, city, state, complement } = req.body

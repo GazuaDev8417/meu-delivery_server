@@ -34,6 +34,7 @@ export default class UserController {
         }
     }
 
+    
     getProfileByuser = async(req:Request, res:Response):Promise<void>=>{
         try{
 
@@ -54,6 +55,34 @@ export default class UserController {
             const token = await this.userBusiness.login(req)
 
             res.status(200).send(token)
+        }catch(e:any){
+            let statusCode = e.statusCode || 400
+            let message = e.error === undefined ? e.message : e.error.message
+            res.status(statusCode).send(message || e.sqlMessage)
+        }
+    }
+
+    
+    requestPasswordReset = async(req:Request, res:Response):Promise<void>=>{
+        try{
+            
+            await this.userBusiness.requestPasswordReset(req)
+
+            res.status(200).send('Reset token criado com sucesso')
+        }catch(e:any){
+            let statusCode = e.statusCode || 400
+            let message = e.error === undefined ? e.message : e.error.message
+            res.status(statusCode).send(message || e.sqlMessage)
+        }
+    }
+
+
+    confirmPasswordReset = async(req:Request, res:Response):Promise<void>=>{
+        try{
+            
+            await this.userBusiness.confirmPasswordReset(req)
+
+            res.status(200).send('Senha alterada com sucesso')
         }catch(e:any){
             let statusCode = e.statusCode || 400
             let message = e.error === undefined ? e.message : e.error.message

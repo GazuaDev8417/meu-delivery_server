@@ -32,6 +32,14 @@ export default class Services{
         )
     }
 
+    resetToken = (payload:string):string=>{
+        return jwt.sign(
+            { payload },
+            process.env.JWT_KEY as string,
+            { expiresIn: '1h' }
+        )
+    }
+
     tokenData = (token:string):TokenData=>{
         return jwt.verify(
             token,
